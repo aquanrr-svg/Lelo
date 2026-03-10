@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CUET PG M.A. English Mock Test | TestKnock</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#0f1f3d;--blue:#1a3c6e;--accent:#e8a000;--green:#15803d;--red:#dc2626;
+    --purple:#6d28d9;--light:#eef3ff;--white:#fff;--gray:#64748b;--border:#e2e8f0;--bg:#f0f4fb;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:#1e293b;font-size:14px;}
+  .header{background:linear-gradient(135deg,#0f1f3d,#1a3c6e);padding:0 20px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 3px 16px rgba(0,0,0,.35);}
+  .logo{font-family:'Sora',sans-serif;font-weight:800;font-size:16px;color:#fff;display:flex;align-items:center;gap:10px;}
+  .logo-pill{background:var(--accent);color:#0f1f3d;font-size:10px;font-weight:800;padding:2px 8px;border-radius:20px;letter-spacing:1px;}
+  .hbtns{display:flex;gap:7px;}
+  .hbtn{padding:5px 13px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;font-family:'DM Sans',sans-serif;transition:background .2s;}
+  .hbtn:hover{background:rgba(255,255,255,.18);}
+  .profile-chip{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border-radius:30px;padding:4px 14px 4px 4px;}
+  .avatar{width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:15px;}
+  .pname{font-size:13px;color:#fff;font-weight:600;}
+  .subrow{background:#fff;border-bottom:2px solid var(--light);display:flex;align-items:center;justify-content:space-between;padding:7px 20px;flex-wrap:wrap;gap:8px;}
+  .subject-tag{background:var(--navy);color:#fff;font-family:'Sora',sans-serif;font-weight:700;font-size:11px;padding:5px 14px;border-radius:4px;letter-spacing:1px;}
+  .subrow-right{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .marks-chip{font-size:12px;color:var(--gray);}
+  .marks-chip b.pos{color:var(--green);}
+  .marks-chip b.neg{color:var(--red);}
+  .timer-wrap{display:flex;align-items:center;gap:6px;}
+  .tlabel{font-size:12px;font-weight:600;color:#334155;}
+  .tval{font-family:'Sora',monospace;font-size:18px;font-weight:800;color:var(--red);min-width:78px;}
+  .warn-chip{background:#fef3c7;border:1px solid #f59e0b;color:#92400e;font-size:11px;font-weight:700;padding:3px 10px;border-radius:4px;display:none;}
+  .prog-wrap{height:4px;background:var(--border);}
+  .prog-bar{height:4px;background:linear-gradient(90deg,var(--accent),#f97316);transition:width .4s;}
+  .main{display:flex;height:calc(100vh - 100px);}
+  .qpanel{flex:1;display:flex;flex-direction:column;background:#fff;position:relative;min-width:0;overflow:hidden;}
+  .qp-head{background:var(--light);border-bottom:1px solid var(--border);padding:10px 22px;display:flex;align-items:center;justify-content:space-between;}
+  .qnum-label{font-family:'Sora',sans-serif;font-weight:700;font-size:14px;color:var(--blue);}
+  .topic-pill{font-size:11px;font-weight:700;padding:3px 11px;border-radius:20px;background:#dbeafe;color:#1e40af;font-family:'Sora',sans-serif;letter-spacing:.3px;}
+  .qbody{flex:1;overflow-y:auto;padding:24px 28px;}
+  .passage{background:#f8faff;border-left:4px solid var(--blue);border-radius:0 8px 8px 0;padding:15px 18px;margin-bottom:22px;font-size:13.5px;line-height:1.9;color:#334155;}
+  .ptitle{font-family:'Sora',sans-serif;font-size:11px;font-weight:700;color:var(--blue);letter-spacing:.8px;display:block;margin-bottom:8px;}
+  .qtext{font-size:15px;font-weight:500;color:#0f172a;line-height:1.7;margin-bottom:22px;}
+  .opts{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .opt{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;transition:all .15s;background:#fff;}
+  .opt:hover{background:#eef3ff;border-color:#93c5fd;}
+  .opt.selected{background:#dbeafe;border-color:var(--blue);}
+  .opt-radio{width:17px;height:17px;border-radius:50%;border:2px solid #94a3b8;flex-shrink:0;margin-top:2px;transition:all .15s;display:flex;align-items:center;justify-content:center;}
+  .opt.selected .opt-radio{border-color:var(--blue);background:var(--blue);}
+  .opt.selected .opt-radio::after{content:'';width:6px;height:6px;background:#fff;border-radius:50%;display:block;}
+  .opt-lbl{font-size:14px;color:#334155;line-height:1.55;}
+  .qfooter{padding:10px 18px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:#fafbff;flex-wrap:wrap;gap:8px;}
+  .btn{padding:8px 16px;border-radius:6px;border:none;cursor:pointer;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;transition:all .2s;}
+  .btn-review{background:var(--purple);color:#fff;}.btn-review:hover{background:#5b21b6;}
+  .btn-clear{background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;}.btn-clear:hover{background:#e2e8f0;}
+  .btn-next{background:var(--blue);color:#fff;}.btn-next:hover{background:#15305a;}
+  .btn-prev{background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;}.btn-prev:hover{background:#e2e8f0;}
+  .btn-submit{background:var(--green);color:#fff;}.btn-submit:hover{background:#166534;}
+  .toggle-btn{position:absolute;right:-13px;top:50%;transform:translateY(-50%);width:24px;height:46px;background:var(--blue);color:#fff;border:none;cursor:pointer;border-radius:0 6px 6px 0;font-size:14px;display:flex;align-items:center;justify-content:center;z-index:10;box-shadow:2px 0 8px rgba(0,0,0,.15);}
+  .palette{width:235px;min-width:235px;background:#fff;border-left:1px solid var(--border);display:flex;flex-direction:column;transition:all .3s;overflow:hidden;}
+  .palette.collapsed{width:0;min-width:0;}
+  .pal-head{background:var(--navy);color:#fff;padding:10px 14px;font-family:'Sora',sans-serif;font-weight:700;font-size:12px;letter-spacing:.8px;}
+  .pal-stats{padding:10px 12px;border-bottom:1px solid var(--border);}
+  .stat-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:5px;}
+  .stat-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray);}
+  .sbadge{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;}
+  .sb-g{background:var(--green);}.sb-r{background:#ef4444;}.sb-gray{background:#94a3b8;}.sb-p{background:var(--purple);}
+  .pal-section-title{padding:6px 12px 2px;font-family:'Sora',sans-serif;font-weight:700;font-size:11px;color:var(--blue);background:var(--light);border-bottom:1px solid var(--border);letter-spacing:.5px;}
+  .pal-grid{padding:10px;display:flex;flex-wrap:wrap;gap:6px;overflow-y:auto;flex:1;}
+  .pbtn{width:36px;height:36px;border-radius:5px;border:1.5px solid #cbd5e1;background:#f8fafc;cursor:pointer;font-size:11px;font-weight:700;font-family:'Sora',sans-serif;display:flex;align-items:center;justify-content:center;transition:all .15s;color:#475569;}
+  .pbtn:hover{transform:scale(1.1);box-shadow:0 2px 8px rgba(0,0,0,.12);}
+  .pbtn.current{background:#ef4444;color:#fff;border-color:#dc2626;border-radius:50%;}
+  .pbtn.answered{background:var(--green);color:#fff;border-color:#166534;border-radius:50%;}
+  .pbtn.marked{background:var(--purple);color:#fff;border-color:#5b21b6;border-radius:50%;}
+  .pbtn.answered-marked{background:var(--purple);color:#fff;border-color:#5b21b6;border-radius:50%;position:relative;}
+  .pbtn.answered-marked::after{content:'✔';position:absolute;bottom:-3px;right:-3px;font-size:7px;background:var(--green);border-radius:50%;width:12px;height:12px;display:flex;align-items:center;justify-content:center;color:#fff;line-height:12px;}
+  .pal-legend{padding:8px 12px;border-top:1px solid var(--border);}
+  .leg-item{display:flex;align-items:center;gap:6px;margin-bottom:4px;font-size:11px;color:var(--gray);}
+  .leg-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;}
+  .results-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:500;overflow-y:auto;}
+  .results-box{background:#fff;max-width:920px;margin:28px auto;border-radius:14px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,.3);}
+  .res-head{background:linear-gradient(135deg,#0f1f3d,#1a3c6e);color:#fff;padding:22px 30px;}
+  .res-head h2{font-family:'Sora',sans-serif;font-size:20px;margin-bottom:4px;}
+  .score-row{display:flex;gap:14px;flex-wrap:wrap;padding:18px 30px;background:var(--light);border-bottom:1px solid var(--border);}
+  .scard{background:#fff;border-radius:10px;padding:12px 20px;text-align:center;min-width:110px;box-shadow:0 2px 8px rgba(0,0,0,.08);}
+  .scard .val{font-family:'Sora',sans-serif;font-size:24px;font-weight:800;color:var(--blue);}
+  .scard .lbl{font-size:11px;color:var(--gray);margin-top:2px;}
+  .scard.total .val{color:var(--green);}
+  .rev-list{padding:20px 30px;}
+  .rev-list h3{font-family:'Sora',sans-serif;color:var(--navy);font-size:16px;margin-bottom:16px;}
+  .rev-item{border:1px solid var(--border);border-radius:8px;margin-bottom:14px;overflow:hidden;}
+  .rev-q{padding:10px 16px;background:#f8fafc;font-weight:600;font-size:13px;color:#1e293b;border-bottom:1px solid var(--border);}
+  .rev-opts{padding:10px 16px;display:flex;flex-direction:column;gap:5px;}
+  .rev-opt{font-size:13px;padding:4px 10px;border-radius:4px;color:#334155;}
+  .rev-opt.ca{background:#dcfce7;color:#166534;font-weight:700;}
+  .rev-opt.uw{background:#fee2e2;color:#991b1b;font-weight:700;text-decoration:line-through;}
+  .rev-status{padding:6px 16px;font-size:12px;font-weight:700;border-top:1px solid var(--border);}
+  .rs-c{color:var(--green);background:#dcfce7;}.rs-w{color:var(--red);background:#fee2e2;}.rs-s{color:var(--gray);background:#f1f5f9;}
+  .rev-exp{padding:10px 16px;background:#fffbeb;border-top:1px solid #fde68a;font-size:12.5px;color:#78350f;line-height:1.65;}
+  .rev-exp strong{display:block;margin-bottom:3px;color:#92400e;font-family:'Sora',sans-serif;font-size:11px;}
+  .btn-restart{display:block;margin:0 30px 26px;padding:13px 26px;background:var(--navy);color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:700;font-family:'Sora',sans-serif;}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:600;align-items:center;justify-content:center;}
+  .modal-overlay.open{display:flex;}
+  .modal-box{background:#fff;border-radius:12px;max-width:580px;width:93%;padding:28px;box-shadow:0 10px 36px rgba(0,0,0,.2);max-height:85vh;overflow-y:auto;}
+  .modal-box h3{font-family:'Sora',sans-serif;color:var(--navy);margin-bottom:14px;font-size:17px;}
+  .modal-box li{font-size:13px;line-height:1.85;color:#475569;}
+  .modal-box ul{padding-left:20px;}
+  .modal-close{margin-top:18px;padding:9px 24px;background:var(--navy);color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;}
+  .confirm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:600;align-items:center;justify-content:center;}
+  .confirm-overlay.open{display:flex;}
+  .confirm-box{background:#fff;border-radius:12px;max-width:420px;width:90%;padding:28px;box-shadow:0 8px 32px rgba(0,0,0,.2);text-align:center;}
+  .confirm-box h3{font-family:'Sora',sans-serif;color:var(--navy);margin-bottom:10px;}
+  .confirm-box p{font-size:13px;color:#64748b;margin-bottom:18px;}
+  .confirm-btns{display:flex;gap:12px;justify-content:center;}
+  .btn-yes{background:var(--green);color:#fff;padding:9px 26px;border:none;border-radius:6px;cursor:pointer;font-weight:700;font-family:'DM Sans',sans-serif;font-size:13px;}
+  .btn-no{background:#f1f5f9;color:#475569;padding:9px 26px;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;font-family:'DM Sans',sans-serif;font-size:13px;}
+  .tp-lit{background:#fce7f3;color:#9d174d;}
+  .tp-iwe{background:#fef3c7;color:#92400e;}
+  .tp-theory{background:#ede9fe;color:#4c1d95;}
+  .tp-terms{background:#d1fae5;color:#065f46;}
+  .tp-genre{background:#cffafe;color:#164e63;}
+  .tp-comp{background:#fef9c3;color:#713f12;}
+  .tp-ling{background:#f0fdf4;color:#166534;}
+  .tp-rc{background:#dbeafe;color:#1e40af;}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">📚 TESTKNOCK <span class="logo-pill">CUET PG</span></div>
+  <div class="hbtns">
+    <button class="hbtn" onclick="openModal('instrModal')">📋 Instructions</button>
+    <button class="hbtn" onclick="openModal('sylModal')">📖 Syllabus</button>
+  </div>
+  <div class="profile-chip"><div class="avatar">🎓</div><span class="pname">M.A. English</span></div>
+</div>
+<div class="subrow">
+  <span class="subject-tag">CUET PG — M.A. ENGLISH FULL MOCK TEST</span>
+  <div class="subrow-right">
+    <span class="marks-chip">Correct: <b class="pos">+4</b> &nbsp;|&nbsp; Wrong: <b class="neg">−1</b> &nbsp;|&nbsp; Skipped: <b>0</b></span>
+    <span class="warn-chip" id="warnChip">⚠ Less than 10 mins!</span>
+    <div class="timer-wrap"><span class="tlabel">Time Left:</span><span class="tval" id="timerVal">01:30:00</span></div>
+  </div>
+</div>
+<div class="prog-wrap"><div class="prog-bar" id="progBar" style="width:1.43%"></div></div>
+<div class="main">
+  <div class="qpanel" id="qPanel">
+    <button class="toggle-btn" id="toggleBtn" onclick="togglePalette()">›</button>
+    <div class="qp-head">
+      <span class="qnum-label" id="qNumLabel">Question 1 of 70</span>
+      <span class="topic-pill tp-lit" id="topicPill">History of English Literature</span>
+    </div>
+    <div class="qbody" id="qBody"></div>
+    <div class="qfooter">
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-review" onclick="markReview()">🔖 Mark &amp; Next</button>
+        <button class="btn btn-clear" onclick="clearResp()">✕ Clear</button>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-prev" onclick="prevQ()">◀ Prev</button>
+        <button class="btn btn-next" onclick="nextQ()">Save &amp; Next ▶</button>
+        <button class="btn btn-submit" onclick="confirmSubmit()">Submit Test</button>
+      </div>
+    </div>
+  </div>
+  <div class="palette" id="palette">
+    <div class="pal-head">QUESTION PALETTE</div>
+    <div class="pal-stats">
+      <div style="font-size:11px;font-weight:700;color:#475569;margin-bottom:6px;">Status Overview</div>
+      <div class="stat-row">
+        <div class="stat-item"><div class="sbadge sb-g" id="stAns">0</div> Answered</div>
+        <div class="stat-item"><div class="sbadge sb-r" id="stNA">0</div> Not Ans.</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-item"><div class="sbadge sb-gray" id="stNV">70</div> Not Visited</div>
+        <div class="stat-item"><div class="sbadge sb-p" id="stMark">0</div> Marked</div>
+      </div>
+    </div>
+    <div class="pal-section-title">Jump to Question</div>
+    <div class="pal-grid" id="palGrid"></div>
+    <div class="pal-legend">
+      <div class="leg-item"><div class="leg-dot" style="background:var(--green)"></div> Answered</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#ef4444"></div> Current</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#94a3b8;border:1px solid #64748b"></div> Not Visited</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--purple)"></div> Marked for Review</div>
+    </div>
+  </div>
+</div>
+<!-- RESULTS -->
+<div class="results-overlay" id="resultsOverlay">
+  <div class="results-box">
+    <div class="res-head"><h2>📊 Test Results — CUET PG M.A. English</h2><div style="font-size:13px;opacity:.8">Marking: +4 Correct | −1 Wrong | 0 Skipped</div></div>
+    <div class="score-row" id="scoreRow"></div>
+    <div class="rev-list" id="revList"></div>
+    <button class="btn-restart" onclick="restartExam()">🔄 Restart Test</button>
+  </div>
+</div>
+<!-- INSTRUCTIONS -->
+<div class="modal-overlay" id="instrModal">
+  <div class="modal-box">
+    <h3>📋 Test Instructions</h3>
+    <ul>
+      <li>Total <strong>70 questions</strong> — CUET PG M.A. English Complete Syllabus</li>
+      <li>Time allowed: <strong>90 minutes</strong></li>
+      <li>Marking: <strong>+4</strong> correct | <strong>−1</strong> wrong | <strong>0</strong> skipped</li>
+      <li>Topics: History of Literature, Indian Writing in English, Literary Theory, Literary Terms, Genres, Comparative Literature, Linguistics, Reading Comprehension</li>
+      <li>Detailed <strong>explanations</strong> shown after submission for every answer</li>
+      <li>Use palette to jump to any question. 🔖 Mark &amp; Next flags for review.</li>
+    </ul>
+    <button class="modal-close" onclick="closeModal('instrModal')">Got it!</button>
+  </div>
+</div>
+<!-- SYLLABUS -->
+<div class="modal-overlay" id="sylModal">
+  <div class="modal-box">
+    <h3>📖 Syllabus Coverage</h3>
+    <ul>
+      <li><strong>Q1–Q10:</strong> History of English Literature (Old English → Postmodern)</li>
+      <li><strong>Q11–Q20:</strong> Indian Writing in English</li>
+      <li><strong>Q21–Q30:</strong> Literary Theory &amp; Criticism</li>
+      <li><strong>Q31–Q40:</strong> Literary Terms &amp; Devices</li>
+      <li><strong>Q41–Q47:</strong> Literary Genres</li>
+      <li><strong>Q48–Q52:</strong> Comparative Literature &amp; Translation Studies</li>
+      <li><strong>Q53–Q60:</strong> Linguistics &amp; Language Basics</li>
+      <li><strong>Q61–Q70:</strong> Reading Comprehension (Prose + Poetry)</li>
+    </ul>
+    <button class="modal-close" onclick="closeModal('sylModal')">Close</button>
+  </div>
+</div>
+<!-- CONFIRM -->
+<div class="confirm-overlay" id="confirmModal">
+  <div class="confirm-box">
+    <h3>⚠ Submit Test?</h3>
+    <p id="confirmText">Are you sure you want to submit?</p>
+    <div class="confirm-btns">
+      <button class="btn-yes" onclick="submitExam()">Yes, Submit</button>
+      <button class="btn-no" onclick="closeModal('confirmModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+<script>
+const Q=[
+  {topic:"History of English Literature",tpClass:"tp-lit",text:"1. 'Beowulf', the oldest surviving epic in English literature, belongs to which period?",opts:["Middle English","Old English","Renaissance","Augustan"],ans:1,exp:"'Beowulf' is an Old English (Anglo-Saxon) epic poem, composed between the 8th and 11th centuries."},
+  {topic:"History of English Literature",tpClass:"tp-lit",text:"2. Who wrote 'The Canterbury Tales', a cornerstone of Middle English literature?",opts:["John Gower","William Langland","Geoffrey Chaucer","Edmund Spenser"],ans:2,exp:"Geoffrey Chaucer wrote 'The Canterbury Tales' in the late 14th century. It is foundational to Middle English literature."},
+  {topic:"History of English Literature",tpClass:"tp-lit",text:"3. Which feature BEST defines Renaissance literature?",opts:["Focus on Puritan morality","Revival of classical Greek and Roman learning","Rejection of humanism","Emphasis on Gothic horror"],ans:1,exp:"The Renaissance was marked by the revival of classical learning, humanism, and a shift away from medieval religious focus."},
+  {topic:"History of English Literature",tpClass:"tp-lit",text:"4. John Milton's 'Paradise Lost' (1667) is primarily associated with which period?",opts:["Elizabethan Age","Jacobean/17th-century Period","Romantic Age","Restoration Period"],ans:1,exp:"Milton wrote 'Paradise Lost' in the mid-17th century, placing it in the Jacobean/Interregnum/Restoration transition. Most scholarship associates it with the 17th-century tradition."},
+  {topic:"History of English Literature",tpClass:"tp-lit",text:"5. The Augustan (Neo-classical) Age in English literature is primarily associated with which century?",opts:["16th century","17th century","18th century","19th century"],ans:2,exp:"The Augustan Age (c. 1700–1745) is an 18th-century movement dominated by Pope, Dryden, and Swift, emphasizing reason and classical order."},
+  {topic:"History of English Literature",tpClass:"tp-lit",text:"6. Which Romantic poet wrote 'Ode to a Nightingale'?",opts:["Percy Bysshe Shelley","William Wordsworth","Lord Byron","John Keats"],ans:3,exp:"'Ode to a Nightingale' (1819) was written by John Keats, celebrated second-generation Romantic poet."},
+  {topic:"History of English Literature",tpClass:"tp-lit",text:"7. The Victorian novel 'Middlemarch' was written by:",opts:["Charlotte Bronte","Jane Austen","George Eliot","Thomas Hardy"],ans:2,exp:"'Middlemarch' (1871-72) was written by George Eliot (pen name of Mary Ann Evans) and is widely considered one of the greatest novels in English."},
+  {topic:"History of English Literature",tpClass:"tp-lit",text:"8. Which Modernist novel is celebrated for pioneering 'stream of consciousness'?",opts:["Mrs Dalloway by Virginia Woolf","Wuthering Heights by Emily Bronte","Vanity Fair by Thackeray","The Mayor of Casterbridge by Hardy"],ans:0,exp:"Virginia Woolf's 'Mrs Dalloway' (1925) is a landmark Modernist novel celebrated for its stream of consciousness technique."},
+  {topic:"History of English Literature",tpClass:"tp-lit",text:"9. 'The Lost Generation' refers to writers disillusioned after:",opts:["The French Revolution","World War I","World War II","The American Civil War"],ans:1,exp:"The Lost Generation (Hemingway, Fitzgerald, Eliot) refers to writers who came of age during and after World War I."},
+  {topic:"History of English Literature",tpClass:"tp-lit",text:"10. Postmodern literature is BEST characterized by:",opts:["Linear narratives and absolute truths","Metafiction, irony, and rejection of grand narratives","Strict adherence to classical forms","Romanticism and nature worship"],ans:1,exp:"Postmodern literature (post-1950s) features metafiction, self-referentiality, irony, and skepticism toward grand narratives."},
+  {topic:"Indian Writing in English",tpClass:"tp-iwe",text:"11. R.K. Narayan's fictional town 'Malgudi' is modelled on which Indian city?",opts:["Chennai","Mysore (Karnataka)","Hyderabad","Pune"],ans:1,exp:"Malgudi is widely believed to be modelled on Mysore, Karnataka, where R.K. Narayan spent much of his life."},
+  {topic:"Indian Writing in English",tpClass:"tp-iwe",text:"12. Salman Rushdie's 'Midnight's Children' (1981) won which award?",opts:["Pulitzer Prize","Nobel Prize","Booker Prize","Sahitya Akademi Award"],ans:2,exp:"'Midnight's Children' won the Booker Prize in 1981 and was later named 'Booker of Bookers' — best novel in the prize's first 25 years."},
+  {topic:"Indian Writing in English",tpClass:"tp-iwe",text:"13. Arundhati Roy's 'The God of Small Things' is set in which Indian state?",opts:["Rajasthan","West Bengal","Kerala","Goa"],ans:2,exp:"'The God of Small Things' (1997) is set in Ayemenem, Kerala, dealing with caste, family, and forbidden love."},
+  {topic:"Indian Writing in English",tpClass:"tp-iwe",text:"14. Rabindranath Tagore received the Nobel Prize in Literature in:",opts:["1905","1910","1913","1921"],ans:2,exp:"Tagore won the Nobel Prize in Literature in 1913, primarily for his collection 'Gitanjali'."},
+  {topic:"Indian Writing in English",tpClass:"tp-iwe",text:"15. Which of the following is NOT a work of Mulk Raj Anand?",opts:["Untouchable","Coolie","The Guide","Across the Black Waters"],ans:2,exp:"'The Guide' (1960) was written by R.K. Narayan. Mulk Raj Anand wrote 'Untouchable', 'Coolie', and 'Across the Black Waters'."},
+  {topic:"Indian Writing in English",tpClass:"tp-iwe",text:"16. Postcolonial literature primarily deals with:",opts:["Literature before colonialism","Colonial-era literature only","The cultural legacy and effects of colonialism","Classical Sanskrit literature"],ans:2,exp:"Postcolonial literature addresses the cultural, social, and political effects of colonialism and its aftermath."},
+  {topic:"Indian Writing in English",tpClass:"tp-iwe",text:"17. 'The White Tiger' (Booker Prize 2008) was written by:",opts:["Kiran Desai","Aravind Adiga","Jhumpa Lahiri","Amitav Ghosh"],ans:1,exp:"'The White Tiger' was written by Aravind Adiga and won the Man Booker Prize in 2008."},
+  {topic:"Indian Writing in English",tpClass:"tp-iwe",text:"18. Kamala Das is primarily known for:",opts:["Historical novels","Confessional poetry and autobiographical writing","Epic poetry","Political drama"],ans:1,exp:"Kamala Das is celebrated for her bold confessional poetry and autobiography 'My Story' (1976)."},
+  {topic:"Indian Writing in English",tpClass:"tp-iwe",text:"19. Which Amitav Ghosh novel is the first of the 'Ibis Trilogy'?",opts:["The Shadow Lines","The Calcutta Chromosome","Sea of Poppies","The Hungry Tide"],ans:2,exp:"'Sea of Poppies' (2008) is the first novel of Ghosh's Ibis Trilogy, followed by 'River of Smoke' and 'Flood of Fire'."},
+  {topic:"Indian Writing in English",tpClass:"tp-iwe",text:"20. The concept of the 'Subaltern' in postcolonial studies is most associated with:",opts:["Edward Said","Frantz Fanon","Gayatri Chakravorty Spivak","Homi K. Bhabha"],ans:2,exp:"Gayatri Chakravorty Spivak's essay 'Can the Subaltern Speak?' (1988) is foundational to subaltern studies."},
+  {topic:"Literary Theory & Criticism",tpClass:"tp-theory",text:"21. Aristotle's 'Poetics' primarily discusses:",opts:["The novel","Lyric poetry","Tragedy and epic poetry","The essay"],ans:2,exp:"Aristotle's 'Poetics' focuses on tragedy and epic poetry, introducing mimesis, catharsis, and the dramatic unities."},
+  {topic:"Literary Theory & Criticism",tpClass:"tp-theory",text:"22. The concept of 'catharsis' was introduced by:",opts:["Plato","Longinus","Aristotle","Horace"],ans:2,exp:"Aristotle introduced 'catharsis' (purification of emotions) in 'Poetics' to describe tragedy's emotional effect on the audience."},
+  {topic:"Literary Theory & Criticism",tpClass:"tp-theory",text:"23. T.S. Eliot's 'Objective Correlative' states that emotion in poetry should be expressed through:",opts:["Direct confession of the poet","A set of objects, situations, or chain of events","Rhyme and meter alone","The author's biography"],ans:1,exp:"Eliot defined 'Objective Correlative' in his 1919 Hamlet essay: particular objects/events that evoke a specific emotion in the reader."},
+  {topic:"Literary Theory & Criticism",tpClass:"tp-theory",text:"24. Matthew Arnold defined culture as 'the best that has been thought and said' in:",opts:["The Study of Poetry","Culture and Anarchy","Essays in Criticism","Preface to Poems"],ans:1,exp:"Arnold's 'Culture and Anarchy' (1869) contains his famous definition of culture."},
+  {topic:"Literary Theory & Criticism",tpClass:"tp-theory",text:"25. Feminist literary criticism is primarily concerned with:",opts:["Economic base of literature","Gender representation and women in literature","Structure of language","Colonial discourse"],ans:1,exp:"Feminist criticism examines how literature reflects or challenges gender roles and the representation of women."},
+  {topic:"Literary Theory & Criticism",tpClass:"tp-theory",text:"26. The term 'differance' is associated with:",opts:["Roland Barthes","Michel Foucault","Jacques Derrida","Louis Althusser"],ans:2,exp:"'Differance' is Derrida's key concept in deconstruction — combining 'to differ' and 'to defer' to challenge stable meaning."},
+  {topic:"Literary Theory & Criticism",tpClass:"tp-theory",text:"27. Edward Said's 'Orientalism' (1978) argues that Western representation of the East is:",opts:["Objective and scholarly","A power-serving construction","Based on factual observation","Sympathetic and respectful"],ans:1,exp:"Said argues Western depictions of the East are constructions that justify and perpetuate Western dominance, not neutral scholarship."},
+  {topic:"Literary Theory & Criticism",tpClass:"tp-theory",text:"28. Structuralism in literary theory is primarily influenced by the linguistics of:",opts:["Noam Chomsky","Ferdinand de Saussure","Ludwig Wittgenstein","Roman Jakobson"],ans:1,exp:"Saussure's structural linguistics — distinguishing langue/parole, signifier/signified — formed the basis of literary structuralism."},
+  {topic:"Literary Theory & Criticism",tpClass:"tp-theory",text:"29. The New Criticism school emphasises:",opts:["Historical context","Author's biography","Close reading of the text itself","Psychoanalytic interpretation"],ans:2,exp:"New Criticism (1930s-60s) advocates close reading of the autonomous text, rejecting biographical and historical context."},
+  {topic:"Literary Theory & Criticism",tpClass:"tp-theory",text:"30. Marxist literary criticism focuses on literature's relationship to:",opts:["The unconscious mind","Class struggle and socioeconomic conditions","Linguistic structure","Colonial power"],ans:1,exp:"Marxist criticism examines literature in relation to class structures, exploring how texts reflect or resist capitalist ideology."},
+  {topic:"Literary Terms & Devices",tpClass:"tp-terms",text:"31. A 'dramatic monologue' is a poem in which:",opts:["Multiple speakers debate","A single speaker addresses a silent listener, revealing character","The narrator describes events","Two characters converse"],ans:1,exp:"A dramatic monologue (e.g., Browning's 'My Last Duchess') features one speaker addressing a silent listener, revealing character."},
+  {topic:"Literary Terms & Devices",tpClass:"tp-terms",text:"32. An 'elegy' is:",opts:["A poem celebrating marriage","A poem of lamentation, usually mourning death","A long narrative poem about heroic deeds","A comic poem"],ans:1,exp:"An elegy mourns the dead. Examples: Milton's 'Lycidas', Gray's 'Elegy Written in a Country Churchyard'."},
+  {topic:"Literary Terms & Devices",tpClass:"tp-terms",text:"33. 'Blank verse' refers to:",opts:["Unrhymed poetry without meter","Unrhymed iambic pentameter","Poetry with rhyme but no rhythm","Poetry in couplets"],ans:1,exp:"Blank verse is unrhymed iambic pentameter — the meter of Shakespeare's plays and Milton's 'Paradise Lost'."},
+  {topic:"Literary Terms & Devices",tpClass:"tp-terms",text:"34. 'Irony' is BEST described as:",opts:["A simile using 'like' or 'as'","A figure of speech where intended meaning is opposite to literal meaning","Repetition of initial consonant sounds","An extended metaphor"],ans:1,exp:"Irony involves saying one thing while meaning another — intended meaning is opposite to or different from the literal."},
+  {topic:"Literary Terms & Devices",tpClass:"tp-terms",text:"35. An 'allegory' is a narrative where:",opts:["Characters are named after real people","Characters and events represent abstract ideas or moral qualities","The story is based on facts","The narrator is unreliable"],ans:1,exp:"An allegory uses characters/events to symbolize abstract ideas. E.g., Bunyan's 'Pilgrim's Progress', Orwell's 'Animal Farm'."},
+  {topic:"Literary Terms & Devices",tpClass:"tp-terms",text:"36. A 'sonnet' traditionally consists of how many lines?",opts:["8","12","14","16"],ans:2,exp:"A sonnet has 14 lines, typically in iambic pentameter. The two main forms are Petrarchan and Shakespearean."},
+  {topic:"Literary Terms & Devices",tpClass:"tp-terms",text:"37. A 'soliloquy' in drama is:",opts:["A conversation between two characters","A monologue where a character speaks thoughts aloud alone on stage","A prologue by the chorus","A speech addressed to the audience"],ans:1,exp:"A soliloquy lets the audience hear a character's inner thoughts while alone on stage (e.g., Hamlet's 'To be or not to be')."},
+  {topic:"Literary Terms & Devices",tpClass:"tp-terms",text:"38. 'Apostrophe' as a literary device means:",opts:["Addressing an absent or imaginary person as if present","A comparison using 'like' or 'as'","Substituting a related word for another","Exaggeration for effect"],ans:0,exp:"Apostrophe addresses an absent person, abstract idea, or inanimate object directly. E.g., 'O Death, where is thy sting?'"},
+  {topic:"Literary Terms & Devices",tpClass:"tp-terms",text:"39. 'Satire' primarily aims to:",opts:["Express personal grief","Celebrate heroic deeds","Criticize or mock society or individuals","Narrate historical events objectively"],ans:2,exp:"Satire uses irony, wit, and exaggeration to criticize. E.g., Swift's 'Gulliver's Travels', Pope's 'The Rape of the Lock'."},
+  {topic:"Literary Terms & Devices",tpClass:"tp-terms",text:"40. A 'paradox' is a statement that:",opts:["Is obviously false","Seems contradictory but reveals a deeper truth","Uses simile and metaphor together","Is a direct comparison"],ans:1,exp:"A paradox appears contradictory but contains a deeper truth. E.g., 'Less is more.' Or Donne's 'Death, thou shalt die.'"},
+  {topic:"Literary Genres",tpClass:"tp-genre",text:"41. An 'epic' is BEST defined as:",opts:["A short lyric poem","A long narrative poem dealing with heroic deeds and grand themes","A play with tragic ending","A prose work about biography"],ans:1,exp:"An epic is a long narrative poem featuring a heroic protagonist undertaking grand adventures. E.g., Homer's 'Iliad', Milton's 'Paradise Lost'."},
+  {topic:"Literary Genres",tpClass:"tp-genre",text:"42. According to Aristotle, 'tragedy' involves the downfall of:",opts:["A common man through everyday misfortune","A noble person due to a fatal flaw (hamartia)","A comic character in a serious situation","A villain getting their punishment"],ans:1,exp:"Aristotelian tragedy involves a noble protagonist whose downfall results from hamartia (fatal flaw), producing catharsis."},
+  {topic:"Literary Genres",tpClass:"tp-genre",text:"43. The 'Bildungsroman' is a type of novel focusing on:",opts:["War and political history","The moral and psychological growth of the protagonist","Romance between characters","A detective solving a mystery"],ans:1,exp:"Bildungsroman (German: 'novel of formation') traces the protagonist's coming-of-age. E.g., Dickens' 'Great Expectations', Bronte's 'Jane Eyre'."},
+  {topic:"Literary Genres",tpClass:"tp-genre",text:"44. A defining feature of the 'short story' as a genre is:",opts:["Multiple plot lines and many characters","Length over 100,000 words","Unity of effect and compact structure","Chapters with sub-plots"],ans:2,exp:"Poe theorized the short story should create a single unified effect with compact, focused narrative structure."},
+  {topic:"Literary Genres",tpClass:"tp-genre",text:"45. Which of the following is an 'epistolary novel'?",opts:["Tom Jones by Henry Fielding","Pamela by Samuel Richardson","Frankenstein by Mary Shelley","Both B and C"],ans:3,exp:"Both 'Pamela' (Richardson, 1740) and 'Frankenstein' (Shelley, 1818) use the epistolary form — narrating through letters."},
+  {topic:"Literary Genres",tpClass:"tp-genre",text:"46. Science fiction as a genre is primarily concerned with:",opts:["Magic and supernatural forces","The impact of science, technology, and speculative futures","Traditional folk mythology","Historical events narrated objectively"],ans:1,exp:"Science fiction explores the impact of real or imagined science/technology on society, often set in the future or alternate worlds."},
+  {topic:"Literary Genres",tpClass:"tp-genre",text:"47. An 'autobiography' differs from a 'biography' in that:",opts:["It is written in third person","It is about a fictional character","It is written by the subject about their own life","It focuses only on childhood"],ans:2,exp:"An autobiography is written by the person about their own life; a biography is written by someone else about another person."},
+  {topic:"Comparative Literature",tpClass:"tp-comp",text:"48. Comparative literature as a discipline primarily involves:",opts:["Studying a single national literary tradition","Studying literature across languages, cultures, and disciplines","Translating ancient texts only","Comparing novels by the same author"],ans:1,exp:"Comparative literature studies literature across linguistic, national, and disciplinary boundaries, exploring connections and differences."},
+  {topic:"Comparative Literature",tpClass:"tp-comp",text:"49. Eugene Nida's 'dynamic equivalence' in translation means:",opts:["Word-for-word literal translation","Translation where the target reader's response mirrors the original reader's","Using only formal language","Preserving the source grammar structure"],ans:1,exp:"Nida's dynamic (functional) equivalence aims for the same effect in target-language readers as the original had on source readers."},
+  {topic:"Comparative Literature",tpClass:"tp-comp",text:"50. The concept of 'World Literature' (Weltliteratur) was coined by:",opts:["Karl Marx","Goethe","Victor Hugo","Friedrich Schiller"],ans:1,exp:"Johann Wolfgang von Goethe coined 'Weltliteratur' in 1827, envisioning literary exchange transcending national boundaries."},
+  {topic:"Comparative Literature",tpClass:"tp-comp",text:"51. Lawrence Venuti is associated with which debate in translation theory?",opts:["Syntax vs semantics","Foreignization vs domestication","Diachronic vs synchronic","Formal vs dynamic equivalence"],ans:1,exp:"Lawrence Venuti's 'The Translator's Invisibility' (1995) proposed foreignization/domestication: whether to make text feel foreign or familiar."},
+  {topic:"Comparative Literature",tpClass:"tp-comp",text:"52. 'Intertextuality' as a concept was introduced by:",opts:["Roland Barthes","Julia Kristeva","Mikhail Bakhtin","Jacques Lacan"],ans:1,exp:"Julia Kristeva coined 'intertextuality' (1960s), building on Bakhtin's dialogism — every text is shaped by other texts."},
+  {topic:"Linguistics",tpClass:"tp-ling",text:"53. Phonology is the study of:",opts:["Word formation","Sentence structure","Sound systems in language","Meaning in language"],ans:2,exp:"Phonology studies the sound systems of languages — how sounds function and are organized within a language."},
+  {topic:"Linguistics",tpClass:"tp-ling",text:"54. The smallest unit of meaning in language is:",opts:["Phoneme","Morpheme","Syllable","Lexeme"],ans:1,exp:"A morpheme is the smallest meaningful unit of language. E.g., 'unhappy' has two morphemes: 'un-' and 'happy'."},
+  {topic:"Linguistics",tpClass:"tp-ling",text:"55. Syntax is concerned with:",opts:["The meaning of words","Rules governing sentence structure","Sounds of language","History of words"],ans:1,exp:"Syntax deals with rules and principles governing sentence structure in a language."},
+  {topic:"Linguistics",tpClass:"tp-ling",text:"56. Semantics is the branch of linguistics that studies:",opts:["Sound systems","Word formation","Meaning — of words, phrases, sentences","Historical language change"],ans:2,exp:"Semantics is the study of meaning in language, including word meaning, sentence meaning, and contextual interpretation."},
+  {topic:"Linguistics",tpClass:"tp-ling",text:"57. Chomsky's 'Universal Grammar' proposes that:",opts:["All languages share identical grammar","Humans are born with an innate capacity for language","Grammar must be explicitly taught","Language is purely a social construct"],ans:1,exp:"Chomsky's Universal Grammar (1960s) argues humans are born with an innate 'language acquisition device' containing universal rules."},
+  {topic:"Linguistics",tpClass:"tp-ling",text:"58. The 'Great Vowel Shift' refers to:",opts:["A consonant change in Old English","A major change in long vowel sounds of Middle English (1400-1700)","The introduction of vowels into Latin","The transition from Sanskrit to English"],ans:1,exp:"The Great Vowel Shift (c.1400-1700) was a major change in long vowel pronunciation in Middle English, shaping Modern English."},
+  {topic:"Linguistics",tpClass:"tp-ling",text:"59. Which is an example of a 'portmanteau' word?",opts:["Beautiful","Brunch (breakfast + lunch)","Running","Quickly"],ans:1,exp:"A portmanteau blends two words: 'brunch' = breakfast + lunch. Others: 'smog' (smoke+fog), 'blog' (web+log)."},
+  {topic:"Linguistics",tpClass:"tp-ling",text:"60. Pragmatics is the study of:",opts:["Historical development of language","How context influences meaning interpretation","Internal structure of words","Sound patterns of language"],ans:1,exp:"Pragmatics examines how context, speaker intention, and social factors influence how language is interpreted beyond literal meaning."},
+  {topic:"Reading Comprehension",tpClass:"tp-rc",passage:`<span class="ptitle">READ THE PASSAGE — Questions 61 to 65</span>The novel, as a literary form, emerged in the 18th century as a distinctly modern genre. Unlike the epic, which celebrated collective heroism and divine intervention, the novel focused on the individual — their inner life, social relationships, and moral development. Ian Watt, in his landmark study 'The Rise of the Novel' (1957), argued that the novel's emergence was closely tied to the rise of the middle class, the spread of literacy, and the growth of print culture. The novel's realism — its commitment to representing ordinary life in believable detail — distinguished it from earlier narrative forms. Writers like Daniel Defoe, Samuel Richardson, and Henry Fielding were pioneers of this new form, each contributing different narrative techniques: Defoe's journalistic realism, Richardson's epistolary intimacy, and Fielding's omniscient narration.`,
+  text:"61. According to the passage, how does the novel differ from the epic?",opts:["The novel focuses on divine heroes while the epic focuses on ordinary people","The novel focuses on the individual, while the epic celebrated collective heroism","The novel is shorter than the epic","The novel avoids realism, unlike the epic"],ans:1,exp:"The passage states the novel 'focused on the individual' unlike the epic which 'celebrated collective heroism and divine intervention.'"},
+  {topic:"Reading Comprehension",tpClass:"tp-rc",passage:null,text:"62. Ian Watt's 'The Rise of the Novel' was published in:",opts:["1945","1957","1970","1962"],ans:1,exp:"The passage explicitly states: 'Ian Watt, in his landmark study The Rise of the Novel (1957)...'"},
+  {topic:"Reading Comprehension",tpClass:"tp-rc",passage:null,text:"63. Which writer is associated with 'epistolary intimacy' in the passage?",opts:["Daniel Defoe","Henry Fielding","Samuel Richardson","Ian Watt"],ans:2,exp:"The passage attributes 'epistolary intimacy' to Samuel Richardson, known for 'Pamela' and 'Clarissa' written in letter form."},
+  {topic:"Reading Comprehension",tpClass:"tp-rc",passage:null,text:"64. 'Realism' as used in the passage most nearly means:",opts:["Imaginary storytelling","Commitment to representing ordinary life in believable detail","Use of supernatural elements","Focus on heroic myths"],ans:1,exp:"The passage defines realism as 'its commitment to representing ordinary life in believable detail.'"},
+  {topic:"Reading Comprehension",tpClass:"tp-rc",passage:null,text:"65. Which factor does Watt NOT link to the novel's emergence?",opts:["Rise of the middle class","Growth of print culture","Spread of literacy","Decline of the church"],ans:3,exp:"Watt links the novel to the middle class, print culture, and literacy — decline of the church is not mentioned."},
+  {topic:"Reading Comprehension",tpClass:"tp-rc",passage:`<span class="ptitle">READ THE POEM — Questions 66 to 70</span><em>Because I could not stop for Death –<br>He kindly stopped for me –<br>The Carriage held but just Ourselves –<br>And Immortality.</em><br><br><em>We slowly drove – He knew no haste<br>And I had put away<br>My labor and my leisure too,<br>For His Civility –</em><br><br>— Emily Dickinson`,
+  text:"66. In this poem, Death is personified as:",opts:["A terrifying monster","A polite, civil gentleman who stops to offer a carriage ride","An angel with wings","A dark shadow"],ans:1,exp:"Dickinson personifies Death as a courteous gentleman who 'kindly stopped' for the speaker and drives them in a carriage."},
+  {topic:"Reading Comprehension",tpClass:"tp-rc",passage:null,text:"67. The third passenger in the carriage is:",opts:["A ghost","God","Immortality","A lover"],ans:2,exp:"The poem states: 'The Carriage held but just Ourselves – / And Immortality.' The third presence is Immortality."},
+  {topic:"Reading Comprehension",tpClass:"tp-rc",passage:null,text:"68. 'He knew no haste' suggests that Death is:",opts:["Hurried and urgent","Patient and unhurried","Angry and violent","Forgetful"],ans:1,exp:"'He knew no haste' implies Death is patient and in no hurry — reinforcing the calm, civil tone throughout the poem."},
+  {topic:"Reading Comprehension",tpClass:"tp-rc",passage:null,text:"69. 'Put away / My labor and my leisure too' suggests the speaker has:",opts:["Gone on holiday","Given up all earthly activities to accompany Death","Started a new job","Begun writing poetry"],ans:1,exp:"Putting away both labor and leisure symbolizes abandoning all worldly concerns — representing the end of earthly life."},
+  {topic:"Reading Comprehension",tpClass:"tp-rc",passage:null,text:"70. The MOST prominent poetic device in this poem is:",opts:["Onomatopoeia","Personification","Hyperbole","Alliteration"],ans:1,exp:"Personification is most prominent — Death is given human qualities (kindness, civility, patience) throughout the poem."}
+];
+
+let cur=0,answers=new Array(70).fill(null),status=new Array(70).fill('not-visited'),timeLeft=90*60,timerInt=null,palVisible=true,submitted=false;
+status[0]='not-answered';
+
+function renderQ(idx){
+  const q=Q[idx];
+  document.getElementById('qNumLabel').textContent='Question '+(idx+1)+' of 70';
+  document.getElementById('topicPill').textContent=q.topic;
+  document.getElementById('topicPill').className='topic-pill '+q.tpClass;
+  document.getElementById('progBar').style.width=(((idx+1)/70)*100)+'%';
+  let html='';
+  if(q.passage) html+='<div class="passage">'+q.passage+'</div>';
+  html+='<div class="qtext">'+q.text+'</div><ul class="opts">';
+  const L=['A','B','C','D'];
+  q.opts.forEach((o,i)=>{
+    const sel=answers[idx]===i?'selected':'';
+    html+='<li class="opt '+sel+'" onclick="selOpt('+i+')">'+'<div class="opt-radio"></div><div class="opt-lbl"><strong>'+L[i]+'.</strong> '+o+'</div></li>';
+  });
+  html+='</ul>';
+  document.getElementById('qBody').innerHTML=html;
+}
+
+function renderPalette(){
+  const g=document.getElementById('palGrid');g.innerHTML='';
+  let ans=0,na=0,nv=0,mk=0;
+  for(let i=0;i<70;i++){
+    const b=document.createElement('button');b.className='pbtn';b.textContent=i+1;
+    if(i===cur)b.classList.add('current');
+    else if(status[i]==='answered'){b.classList.add('answered');ans++;}
+    else if(status[i]==='marked'){b.classList.add('marked');mk++;}
+    else if(status[i]==='answered-marked'){b.classList.add('answered-marked');ans++;mk++;}
+    else if(status[i]==='not-visited')nv++;
+    else na++;
+    b.onclick=()=>goTo(i);g.appendChild(b);
+  }
+  document.getElementById('stAns').textContent=ans;
+  document.getElementById('stNA').textContent=na;
+  document.getElementById('stNV').textContent=nv;
+  document.getElementById('stMark').textContent=mk;
+}
+
+function selOpt(i){answers[cur]=i;status[cur]=status[cur]==='marked'?'answered-marked':'answered';renderQ(cur);renderPalette();}
+function goTo(i){cur=i;if(status[cur]==='not-visited')status[cur]='not-answered';renderQ(cur);renderPalette();}
+function nextQ(){if(answers[cur]===null&&status[cur]!=='marked')status[cur]='not-answered';if(cur<69)goTo(cur+1);}
+function prevQ(){if(cur>0)goTo(cur-1);}
+function markReview(){status[cur]=answers[cur]!==null?'answered-marked':'marked';renderPalette();if(cur<69)goTo(cur+1);}
+function clearResp(){answers[cur]=null;status[cur]=status[cur]==='answered-marked'?'marked':'not-answered';renderQ(cur);renderPalette();}
+
+function startTimer(){
+  timerInt=setInterval(()=>{
+    timeLeft--;
+    if(timeLeft<=600)document.getElementById('warnChip').style.display='block';
+    if(timeLeft<=0){clearInterval(timerInt);submitExam(true);}
+    const h=String(Math.floor(timeLeft/3600)).padStart(2,'0');
+    const m=String(Math.floor((timeLeft%3600)/60)).padStart(2,'0');
+    const s=String(timeLeft%60).padStart(2,'0');
+    document.getElementById('timerVal').textContent=h+':'+m+':'+s;
+    if(timeLeft<=120)document.getElementById('timerVal').style.color='#dc2626';
+  },1000);
+}
+
+function confirmSubmit(){
+  const u=status.filter(s=>s==='not-visited'||s==='not-answered').length;
+  document.getElementById('confirmText').textContent='You have '+u+' unanswered question(s). Submit?';
+  document.getElementById('confirmModal').classList.add('open');
+}
+
+function submitExam(auto){
+  if(submitted)return;submitted=true;clearInterval(timerInt);closeModal('confirmModal');
+  let score=0,correct=0,wrong=0,skip=0;
+  Q.forEach((q,i)=>{if(answers[i]===null)skip++;else if(answers[i]===q.ans){score+=4;correct++;}else{score-=1;wrong++;}});
+  const pct=Math.round((correct/70)*100);
+  const grade=pct>=80?'🏆 Excellent':pct>=60?'👍 Good':pct>=40?'📖 Average':'💪 Keep Practising';
+  document.getElementById('scoreRow').innerHTML='<div class="scard total"><div class="val">'+score+'</div><div class="lbl">Total Score</div></div><div class="scard"><div class="val" style="color:var(--green)">'+correct+'</div><div class="lbl">Correct</div></div><div class="scard"><div class="val" style="color:var(--red)">'+wrong+'</div><div class="lbl">Wrong</div></div><div class="scard"><div class="val" style="color:#94a3b8">'+skip+'</div><div class="lbl">Skipped</div></div><div class="scard"><div class="val" style="color:var(--blue)">'+pct+'%</div><div class="lbl">Accuracy</div></div><div class="scard"><div class="val" style="font-size:15px">'+grade+'</div><div class="lbl">Grade</div></div>';
+  const L=['A','B','C','D'];
+  let html='<h3>📝 Detailed Answer Review with Explanations</h3>';
+  Q.forEach((q,i)=>{
+    const ua=answers[i],ca=q.ans;
+    let sc,st;
+    if(ua===null){sc='rs-s';st='⬜ Skipped (0)';}else if(ua===ca){sc='rs-c';st='✅ Correct (+4)';}else{sc='rs-w';st='❌ Wrong (−1)';}
+    html+='<div class="rev-item"><div class="rev-q">Q'+(i+1)+'. '+q.text+'</div><div class="rev-opts">';
+    q.opts.forEach((o,oi)=>{let cls='';if(oi===ca)cls='ca';else if(oi===ua&&ua!==ca)cls='uw';html+='<div class="rev-opt '+cls+'">'+L[oi]+'. '+o+(oi===ca?' ✔':'')+'</div>';});
+    html+='</div><div class="rev-status '+sc+'">'+st+'</div><div class="rev-exp"><strong>💡 Explanation</strong>'+q.exp+'</div></div>';
+  });
+  document.getElementById('revList').innerHTML=html;
+  document.getElementById('resultsOverlay').style.display='block';
+}
+
+function restartExam(){
+  document.getElementById('resultsOverlay').style.display='none';
+  answers=new Array(70).fill(null);status=new Array(70).fill('not-visited');status[0]='not-answered';
+  cur=0;timeLeft=90*60;submitted=false;clearInterval(timerInt);
+  document.getElementById('warnChip').style.display='none';
+  document.getElementById('timerVal').style.color='var(--red)';
+  renderQ(0);renderPalette();startTimer();
+}
+
+function togglePalette(){palVisible=!palVisible;document.getElementById('palette').classList.toggle('collapsed',!palVisible);document.getElementById('toggleBtn').textContent=palVisible?'›':'‹';}
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+renderQ(0);renderPalette();startTimer();
+</script>
+</body>
+</html>
